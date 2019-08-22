@@ -1,0 +1,424 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/skeleton/2.0.4/skeleton.css" >
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+        
+        
+        <link rel="stylesheet" href="css/form.css" >
+        <script src="./js/instance.js"></script>
+        
+       
+       
+        <script src="./node_modules/web3/dist/web3.min.js"></script>
+
+
+
+        <style>
+        
+        .btn1{
+    width:35%; 
+    height: 40;
+    color:black;
+    border:1px solid rgb(0, 119, 128);
+    margin-top: 20px;
+    border-radius: 10px;
+    vertical-align: middle;
+    background-color: #eee;
+}
+
+.d1{
+  margin-left: 50;
+  margin-right: 50;
+  margin-top: 40px;
+  text-align: center;
+}
+
+.home
+{
+    width: 50px;
+    height: 50px;
+    border: none;
+}
+
+
+body {
+    background-image: url("images/contr.png");
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+    background-size:cover;
+    }
+ </style>
+
+    </head>
+    <body >
+            <button class="home" onclick="contractorhome()"><img src=".\images\home.png" class="home"> </button>
+            
+        <div class="container"  id="c2">
+            <div class="form-container">
+                <h1>
+                    LOGIN
+                </h1>
+                <form method="post" id="loginfrm" >
+                    <label for="acc">Account Address</label>
+                    <input id="acc" type="text" name="acc" required maxlength="100">
+                    <label for="pkey">Private Key</label>
+                    <input id="pkey" type="password" name="pkey" required maxlength="100">        
+                    <button class="button-primary" type="button" id="b1" onclick="login()">LOGIN</button>
+                </form>
+            </div>
+        </div>
+
+
+        <div class="d1" id="d1" style="display:none">
+                <font color="white">     <h1 align="center">CONTRACTOR HOME</h1><br><br></font>
+        <input type="text" id="cid" placeholder="Customer ID" style="width:35%; border-radius: 10px;height: 40;"><br>
+        <button type="button" class="btn1" onclick="viewpsnldetails()">View Customer Details</button> <br>
+        <button type="button" class="btn1" onclick="viewmedicalhistory()">View Customer History</button><br>
+        <button type="button" class="btn1" onclick="_addcustomer()">Add Customer</button> <br>  
+        <button type="button" class="btn1" onclick="_addprovider()">Add Provider</button><br>
+        <button type="button" class="btn1" onclick="_trackchanges()">Track Changes</button><br>
+      <!--  <button type="button" class="btn1" onclick="_viewproviders()">View Providers</button><br>  -->
+        <button type="button" class="btn1" onclick="_addowner()">Add Owner</button>
+        
+        </div>
+
+
+
+
+        <div class="container" id="c1"  style="display:none">
+            <div class="form-container">
+                <h1>
+                    Add Customer
+                </h1>
+                <form method="post" id="frm2">
+                    <label for="cacc">Customer Account Address</label>
+                    <input id="cacc" type="text" name="cacc" required maxlength="50">
+                    
+                    <label for="fname">First Name</label>
+                    <input id="fname" type="text" name="fname" required maxlength="50">        
+                    
+                    <label for="lname">Last Name</label>
+                    <input id="lname" type="text" name="lname" required maxlength="50">        
+                    
+
+                    <label for="zcode">Zip code</label>
+                    <input id="zcode" type="text" name="zcode" required maxlength="50">        
+                    
+
+                    <label for="pno">Phone Number</label>
+                    <input id="pno" type="text" name="pno" required maxlength="50">        
+                    
+                    <label for="ssn">SSN</label>
+                    <input id="ssn" type="text" name="ssn" required maxlength="50">        
+                    
+
+                    <button class="button-primary" type="button" id="b2" onclick="addcustomer()">ADD</button>
+                </form>
+            </div>
+        </div>
+
+        
+    <div class="container" id="c3"  style="display:none">
+            <div class="form-container">
+                <h1>
+                    CUSTOMER DETAILS
+                </h1>
+    <form id="frm1">
+            <label for="_fname">First Name</label>
+            <input id="_fname" type="text" name="_fname" required maxlength="50">        
+            
+            <label for="_lname">Last Name</label>
+            <input id="_lname" type="text" name="_lname" required maxlength="50">        
+            
+
+            <label for="_zcode">Zip code</label>
+            <input id="_zcode" type="text" name="_zcode" required maxlength="50">        
+            
+
+            <label for="_pno">Phone Number</label>
+            <input id="_pno" type="text" name="_pno" required maxlength="50">        
+            
+            <label for="_ssn">SSN</label>
+            <input id="_ssn" type="text" name="_ssn" required maxlength="50">        
+        </form>
+        </div>
+        </div>
+
+        
+                
+    <div class="container" id="c4"  style="display:none">
+            <div class="form-container">
+                <h1>
+                    PROVIDER DETAILS
+                </h1>
+    <form id="frm1">
+            <label for="prad">Provider Account Address </label>
+            <input id="prad" type="text" name="prad" required maxlength="50">   
+
+            <label for="prid">Provider ID</label>
+            <input id="prid" type="text" name="prid" required maxlength="50">        
+            
+            <label for="pname">Provider Name</label>
+            <input id="pname" type="text" name="pname" required maxlength="50">        
+        
+            <button class="button-primary" type="button" id="b3" onclick="addprovider()">ADD</button>
+        </form>
+        </div>
+        </div>
+
+        <div class="container" id="c5"  style="display:none">
+                <div class="form-container">
+                    <h1>
+                        OWNER DETAILS
+                    </h1>
+        <form id="frm1">        
+                
+                <label for="acadr">OWNER ACCOUNT ADDRESS</label>
+                <input id="acadr" type="text" name="acadr" required maxlength="50">        
+            
+                <button class="button-primary" type="button" id="b4" onclick="addowner()">ADD</button>
+            </form>
+            </div>
+            </div>
+
+        <div class="d1" id="t1"> <table id="tbl"  border="1px" >
+            </table></div>
+
+            <div class="d1" id="t2" style="margin-left:400px"> <table id="tb2"  border="1px" >
+                </table></div>
+
+        <script>
+
+           // var myInstance,account,x;
+
+            /*
+            function _viewproviders()
+            {
+                document.getElementById("d1").style.display = 'none';
+            
+                //document.getElementById("c4").style.display = 'block';
+            }
+            
+            function viewproviders()
+            {
+                
+            }
+            */
+
+            function _addprovider()
+            {
+                document.getElementById("d1").style.display = 'none';
+            
+                document.getElementById("c4").style.display = 'block';
+            }
+
+
+             
+            function addprovider()
+            {
+               myInstance.addprovider($('#prad').val(),$('#pname').val(),$('#prid').val(),{gas:300000});
+               alert("provider added successfully");
+            }
+
+
+        function _addowner()
+        {
+            document.getElementById("d1").style.display = 'none';
+            
+            document.getElementById("c5").style.display = 'block';
+        }
+
+        function addowner()
+        {
+            myInstance.addOwnership($('#acadr').val(),{gas:300000});
+            alert("New Owner Added");
+        }
+
+     function viewpsnldetails()
+    {
+        document.getElementById("d1").style.display = 'none';
+       
+        var id= document.getElementById("cid").value;
+       
+        var callData = myInstance.oviewdetails.call(id);
+       console.log(callData);
+       
+        document.getElementById("_fname").value = callData[0];
+        document.getElementById("_lname").value = callData[1];
+        document.getElementById("_zcode").value = callData[2];
+        document.getElementById("_pno").value = callData[3];
+        document.getElementById("_ssn").value = callData[4];
+     
+        document.getElementById("c3").style.display = 'block';
+        
+    }
+
+
+    function login()
+        {
+            if($("#pkey").val()!="" && $("#acc").val()!="")
+            {
+                $.get("http://localhost:8080/validate?pkey="+ "0x" +$("#pkey").val())
+                .done(function name(data) {
+                  
+                    console.log(data);
+                   account=$("#acc").val().toLowerCase();
+                   console.log(account);
+             if(new String(data).valueOf() == new String(account).valueOf() )
+                {
+                    instancecreator(1);
+                    document.getElementById("c2").style.display = 'none';
+                document.getElementById("d1").style.display = 'block';
+                }
+                else{
+                    alert("Enter the details correctly");
+                    document.getElementById("loginfrm").reset();
+                }
+         })
+
+         .fail(function(txt,status,errthrown){
+                  alert("Enter the details correctly");
+                    document.getElementById("loginfrm").reset();
+                    console.log(errthrown);
+         });
+
+            } 
+            else{
+                alert("Enter the details correctly");
+            }
+        }
+
+
+
+
+        function viewmedicalhistory() {
+
+            document.getElementById("d1").style.display = 'none';
+           $("#tbl tr").remove(); 
+            var i;
+                var table = document.getElementById("tbl");
+                var count = myInstance.getmedicalhistorycount.call($("#cid").val());
+
+
+            var j=0;
+            for (i =count-1; i >=0; i--) {
+                var c = myInstance.oviewmedicalhistory.call($("#cid").val(),i);
+                
+                    console.log(c); 
+                    var row = table.insertRow(j);
+                    var cell1 = row.insertCell(0); 
+                    var cell2 = row.insertCell(1);
+                    var cell3 = row.insertCell(2);
+                    var cell4 = row.insertCell(3);
+                 
+
+                    cell1.innerHTML = c[2];
+                    cell2.innerHTML = c[7];
+                    cell3.innerHTML = c[3];
+                    cell4.innerHTML = c[5];
+                   
+                    
+                     j++;
+                 }
+                      var header = table.createTHead();
+                        var row = header.insertRow(0);
+
+                        var cell1 = row.insertCell(0);
+                        var cell2 = row.insertCell(1);
+                        var cell3 = row.insertCell(2);
+                        var cell4 = row.insertCell(3);
+                  
+ 
+                        cell1.innerHTML = "<b>CLAIM TYPE</b>";
+                        cell2.innerHTML = "<b>CLAIM AMOUNT</b>";
+                        cell3.innerHTML = "<b>CFS ID</b>";
+                        cell4.innerHTML = "<b>ADJD DATE</b>";
+             document.getElementById("t1").style.display='block';
+                }
+
+        function addcustomer()
+        {
+           // myInstance.addpatient.call($("#cacc").val(),$("#fname").val(), $("#lname").val(), $("#zcode").val(),$("#pno").val(),$("#ssn").val(), {account, gas: 3000000 }, function (err, result) { console.log(result);  
+            //});           
+             myInstance.addpatient($("#cacc").val(),$("#fname").val(), $("#lname").val(), $("#zcode").val(),$("#pno").val(),$("#ssn").val(), {account, gas: 3000000 }, function (err, result) { console.log(result);  
+             });
+             document.getElementById("frm2").reset();
+                alert("Customer added successfully");
+                var t=Number(myInstance.pidcounter.call().c[0])+1;
+                alert("Customer ID  :  "+t);
+
+        }
+
+        function _addcustomer()
+        {
+            document.getElementById("d1").style.display = 'none';
+            
+            document.getElementById("c1").style.display = 'block';
+            
+        }
+
+     function _trackchanges() 
+{
+    $("#tb2 tr").remove(); 
+    document.getElementById("d1").style.display = 'none';
+            instancecreator();
+            console.log(x);
+            var i;
+             //var integer = document.getElementById("geid").value;
+                var table = document.getElementById("tb2");
+      
+            var a="";
+            var b="";
+            var j=0;
+            for (i = x; i >= 2; i--) {
+                var c = myInstance.oviewdetails.call($("#cid").val(), i);
+                if (c[0] != "" && c[1] != "" && c[2] != "" && c[3] != [] && !(new String(c[2]).valueOf() == new String(a).valueOf() && new String(c[3]).valueOf() == new String(b).valueOf())) 
+                { 
+                    console.log(c);
+                    var row = table.insertRow(j);
+                    var cell1 = row.insertCell(0);
+                    var cell2 = row.insertCell(1);
+                     a=c[2];
+                     b=c[3]; 
+                    cell1.innerHTML = a;
+                    cell2.innerHTML = b;
+                  
+                    j++;
+                }
+                
+
+            }
+                      var header = table.createTHead();
+                        var row = header.insertRow(0);
+
+                        var cel1 = row.insertCell(0);
+                        var cel2 = row.insertCell(1);
+                        
+
+                        cel1.innerHTML = "<b>ZIPCODE</b>"
+                        cel2.innerHTML = "<b>PHONE NO.</b>"
+                      
+             document.getElementById("t2").style.display='block';
+        
+
+}
+
+
+function contractorhome()
+               {
+                 document.getElementById("c1").style.display = 'none';
+                 document.getElementById("c2").style.display = 'none';
+                 document.getElementById("c3").style.display = 'none';
+                 document.getElementById("c4").style.display = 'none';
+                 document.getElementById("c5").style.display = 'none';
+                 document.getElementById("t1").style.display = 'none';
+                document.getElementById("d1").style.display = 'block';
+                document.getElementById("t2").style.display = 'none';
+
+                }
+
+
+        </script>
+    </body>
+</html>

@@ -1,0 +1,321 @@
+<html>
+        
+        <head>
+                <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" integrity="sha384-WskhaSGFgHYWDcbwN70/dfYBj47jz9qbsMId/iRN3ewGhXQFZCSftd1LZCfmhktB" crossorigin="anonymous">
+                <link rel="stylesheet" type="text/css" href="css/customer.css">
+        
+                <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/skeleton/2.0.4/skeleton.css" >
+                <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+                
+                
+                <link rel="stylesheet" href="css/form.css" >
+                <script src="./js/instance.js"></script>
+                
+               
+                <script src="./node_modules/web3/dist/web3.min.js"></script>
+        
+                <style>
+        .btn1{
+            width:35%; 
+            height: 40;
+            color:black;
+            border:1px solid rgb(0, 119, 128);
+            margin-top: 20px;
+            border-radius: 10px;
+            vertical-align: middle;
+            background-color: #eee;
+        }
+        
+        .d1{
+          margin-left: 50;
+          margin-right: 50;
+          margin-top: 60px;
+          text-align: center;
+        }
+        
+        .home
+        {
+            width: 50px;
+            height: 50px;
+            border: none;
+        }
+
+        body {
+    background-image: url("images/docbg.jpg");
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+    }
+        
+        </style>
+        </head>
+        <body>
+        
+            <button class="home" onclick="providerhome()"><img src=".\images\home.png" class="home"> </button>
+        
+                <div class="container"  id="c2" style=" margin-top: 20px;">
+                        <div class="form-container">
+                            <h3 align="center">
+                               PROVIDER LOGIN
+                            </h3>
+                            <form method="post" id="loginfrm" >
+                                <label for="acc">Provider ID</label>
+                                <input id="acc" type="text" name="acc" required maxlength="100">
+                                <label for="pkey">Private Key</label>
+                                <input id="pkey" type="password" name="pkey" required maxlength="100">        
+                                <button class="button-primary" type="button" id="b1" onclick="login()">LOGIN</button>
+                            </form>
+                        </div>
+                    </div>
+        
+        
+            <div class="d1" id="d1" style="display:none">
+                <h1 align="center">PROVIDER HOME</h1><br><br>
+                <input type="text" id="pid" placeholder="Patient ID" style="width:35%; border-radius: 10px;height: 40;"><br>
+                <button type="button" class="btn1" onclick="viewpdetails()">View PATIENT DETAILS</button> <br>
+                <button type="button" class="btn1" onclick="viewmedicalhistory()">VIEW PATIENT HISTORY</button><br>
+                <button type="button" class="btn1" onclick="updatemedicalhistory()">ADD PATIENT RECORDS</button><br>
+            </div>
+        
+        
+            <div class="container" id="c1"  style="display:none">
+                    <div class="form-container">
+                        <h1>
+                            PATIENT DETAILS
+                        </h1>
+            <form id="frm1">
+                    <label for="fname">First Name</label>
+                    <input id="fname" type="text" name="fname" required maxlength="50">        
+                    
+                    <label for="lname">Last Name</label>
+                    <input id="lname" type="text" name="lname" required maxlength="50">        
+                    
+        
+                    <label for="zcode">Zip code</label>
+                    <input id="zcode" type="text" name="zcode" required maxlength="50">        
+                    
+        
+                    <label for="pno">Phone Number</label>
+                    <input id="pno" type="text" name="pno" required maxlength="50">        
+                    
+                    <label for="ssn">SSN</label>
+                    <input id="ssn" type="text" name="ssn" required maxlength="50">        
+                </form>
+                </div>
+                </div>
+        
+                
+    
+                <div class="container" id="c3" style="display:none">
+                        <div class="form-container">
+                            <h3 align="center">
+                               PATIENT RECORDS
+                            </h3>
+                <form id="frm2" >
+              <!--          <label for="provider">PROVIDER</label>
+                        <input id="provider" type="text" name="provider" required maxlength="50">        
+                        
+                        <label for="providerid">PROVIDER_ID</label>
+                        <input id="providerid" type="text" name="providerid" required maxlength="50">  
+              -->
+                        <label for="claimtype">CLAIM TYPE</label>
+                        <input id="claimtype" type="text" name="claimtype" required maxlength="50">        
+                        
+                        <label for="cfs_id">CFS_ID</label>
+                        <input id="cfs_id" type="text" name="cfs_id" required maxlength="50">   
+                        
+                        <label for="adjd_date">ADJD_DATE</label>
+                        <input id="adjd_date" type="text" name="adjd_date" required maxlength="50">   
+                        
+                <!--     <label for="age">AGE</label>
+                        <input id="age" type="text" name="age" required maxlength="50">   
+                        
+                        <label for="cca_nbr">CCA_NBR</label>
+                        <input id="cca_nbr" type="text" name="cca_nbr" required maxlength="50">   
+                        
+                        <label for="diseaseid">DISEASE_ID</label>
+                        <input id="diseaseid" type="text" name="diseaseid" required maxlength="50">  
+                -->
+                        
+                        <label for="claimamt">CLAIM_AMOUNT</label>
+                        <input id="claimamt" type="text" name="claimamt" required maxlength="50">   
+                         
+        
+                        <button type="button" class="btn1" onclick="updatemedicalhistory1()">ADD</button> 
+        
+                    </form>
+                    </div>
+                    </div>
+                
+        
+                   <div class="d1" id="t1"> <table id="tbl"  border="1px" >
+                        </table></div>
+        
+                        
+
+
+            <script>
+        
+            //var myInstance,account,x;
+        
+             function viewpdetails()
+            {
+                if (!myInstance.checkpermission.call($("#pid").val()).c[0]) {
+                        alert("You are not authorised to view the record");
+                    }
+                else{
+                document.getElementById("d1").style.display = 'none';
+               
+                var callData = myInstance.viewdetails.call(document.getElementById("pid").value);
+               
+               
+                document.getElementById("fname").value = callData[0];
+                document.getElementById("lname").value = callData[1];
+                document.getElementById("zcode").value = callData[2];
+                document.getElementById("pno").value = callData[3];
+                document.getElementById("ssn").value = callData[4];
+             
+                document.getElementById("c1").style.display = 'block';
+                }
+            }
+    
+        
+
+            function login()
+        {
+            if($("#pkey").val()!="" && $("#acc").val()!="")
+            {
+
+              account="";
+               instancecreator();
+                account=myInstance.getpaddress.call ($("#acc").val());
+                console.log(account);
+                $.get("http://localhost:8080/validate?pkey="+ "0x" +$("#pkey").val())
+                .done(function name(data) {
+                  
+                    console.log(data);
+                   
+             if(new String(data).valueOf() == new String(account).valueOf() )
+                {
+                    instancecreator();
+                    document.getElementById("c2").style.display = 'none';
+                document.getElementById("d1").style.display = 'block';
+                }
+                else{
+                    alert("Enter the details correctly");
+                    document.getElementById("loginfrm").reset();
+                }
+         })
+
+         .fail(function(txt,status,errthrown){
+                  alert("Enter the details correctly");
+                    document.getElementById("loginfrm").reset();
+                    console.log(errthrown);
+         });
+
+            } 
+            else{
+                alert("Enter the details correctly");
+            }
+        }
+        
+        
+                function viewmedicalhistory() {
+                    if (!myInstance.checkpermission.call($("#pid").val()).c[0]) {
+                        alert("You are not authorised to view the record");
+                    }
+                    else{
+                        document.getElementById("d1").style.display = 'none';
+                         $("#tbl tr").remove(); 
+                        var i;
+                        var table = document.getElementById("tbl");
+                        var count = myInstance.getmedicalhistorycount.call($("#pid").val());
+        
+        
+                    var j=0;
+                    for (i =count-1; i >=0; i--) {
+                        var c = myInstance.viewmedicalhistory.call($("#pid").val(),i);
+                        
+                            console.log(c); 
+                            var row = table.insertRow(j);
+                            var cell1 = row.insertCell(0); 
+                            var cell2 = row.insertCell(1);
+                            var cell3 = row.insertCell(2);
+                            var cell4 = row.insertCell(3);
+                         
+        
+                            cell1.innerHTML = c[2];
+                            cell2.innerHTML = c[7];
+                            cell3.innerHTML = c[3];
+                            cell4.innerHTML = c[5];
+                           
+                            
+                             j++;
+                         }
+                              var header = table.createTHead();
+                                var row = header.insertRow(0);
+        
+                                var cell1 = row.insertCell(0);
+                                var cell2 = row.insertCell(1);
+                                var cell3 = row.insertCell(2);
+                                var cell4 = row.insertCell(3);
+                          
+         
+                                cell1.innerHTML = "<b>CLAIM TYPE</b>";
+                                cell2.innerHTML = "<b>CLAIM AMOUNT</b>";
+                                cell3.innerHTML = "<b>CFS ID</b>";
+                                cell4.innerHTML = "<b>ADJD DATE</b>";
+                             document.getElementById("t1").style.display='block';
+                
+        
+                    }
+                   
+        
+        
+        
+                         /*
+                    var callData = myInstance.viewmedicalhistory.call(document.getElementById("pid").value,count);
+                    document.getElementById("provider").value = callData[0];
+                    document.getElementById("claimtype").value = callData[1];
+                    document.getElementById("cfs_id").value = callData[2];
+                    document.getElementById("adjd_date").value = callData[3];
+                    document.getElementById("age").value = callData[4];
+                    document.getElementById("ccs_nbr").value = callData[5];
+                    document.getElementById("diseaseid").value = callData[6];
+                    document.getElementById("claiamamt").value = callData[7];
+                    document.getElementById("description").value = callData[8];   */
+        }
+        
+
+
+        function updatemedicalhistory1() {
+
+           /*     myInstance._updatemedicalhistory($("#pid").val(),$("#claimtype").val(), $("#cfs_id").val(),
+                $("#adjd_date").val(), $("#age").val(), $("#cca_nbr").val(), $("#diseaseid").val(), $("#claimamt").val(), $("#description").val(), { gas: 3000000 }, function (err, result) {
+                    console.log(result);
+                });  */
+
+                myInstance.updatemh1($("#pid").val(), $("#claimamt").val(), $("#claimtype").val(),$("#cfs_id").val(),$("#adjd_date").val(),{  gas: 3000000 }, function (err, result) {
+                    console.log(result);
+                });
+
+                  alert("medical records updated successfully");
+                
+            }
+
+            function updatemedicalhistory() {
+                                 document.getElementById("d1").style.display = 'none';
+                                document.getElementById("c3").style.display = 'block';
+            }
+        
+             function providerhome()
+               {
+                 document.getElementById("c1").style.display = 'none';
+                 document.getElementById("c2").style.display = 'none';
+                 document.getElementById("c3").style.display = 'none';
+                 document.getElementById("t1").style.display = 'none';
+                document.getElementById("d1").style.display = 'block';
+                }
+   </script>
+        </body>
+        
+        </html>
